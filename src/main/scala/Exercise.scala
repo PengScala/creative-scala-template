@@ -7,7 +7,7 @@ import doodle.backend.StandardInterpreter._
 /**
   * Created by am_dev on 4/6/17.
   */
-class Exercise {
+object Exercise {
 
 
   object c4Ex1 {

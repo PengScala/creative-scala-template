@@ -120,6 +120,7 @@ object Exercise {
         }
       }
       loop(count, color)
+      //test
     }
 
     def gradientCircles(count: Int, size: Int, color: Color, spinDegree: Int) : Image ={

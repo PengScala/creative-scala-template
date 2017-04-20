@@ -62,10 +62,53 @@ object Exercise {
     {println("1"); 1} + {println("2"); 2} + {println("3"); 3}
 
   }
-  
-  object c6Ex1{
 
+  object c6Ex{
+    def square(x : Int): Int = {
+      println("test1")
+      x * x
+    }
 
+    def halve (x: Double): Double = x / 2
   }
 
+  object c7Ex{
+
+    def stackBox(count: Int) : Image ={
+      count match {
+        case 0 => Image.rectangle(20, 20).fillColor(Color.red)
+        case _ => Image.rectangle(20, 20).fillColor(Color.red) beside stackBox(count - 1)
+      }
+    }
+
+    def cross (count: Int) : Image ={
+      val unit = Image.circle(10)
+      def loop (count : Int) : Image ={
+        count match {
+          case 0 => unit
+          case _ => ((unit beside loop(count - 1) beside unit) above unit) below unit
+        }
+      }
+      loop(count)
+    }
+
+    def sierTri (count: Int) : Image ={
+      val unit = Image.triangle(10, 15)
+      def loop (count: Int) : Image = {
+        count match {
+          case 0 => unit
+          case _ => loop (count  - 1) above (loop (count  - 1) beside loop (count  - 1))
+        }
+      }
+      loop(count)
+    }
+
+    def exDouble (n : Int) : Int ={
+      n match {
+        case 0 => 0
+        case _ => 2 * exDouble(n - 1)
+      }
+    }
+
+  }
 }

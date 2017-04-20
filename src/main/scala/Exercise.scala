@@ -1,3 +1,4 @@
+import com.sun.javafx.geom.transform.BaseTransform.Degree
 import doodle.core._
 import doodle.core.Image._
 import doodle.syntax._
@@ -109,6 +110,18 @@ object Exercise {
         case _ => 2 * exDouble(n - 1)
       }
     }
+
+/*    def gradientBox (count: Int, color: Color) : Image ={
+      val unit = Image.rectangle(10,10).fillColor(Color.blue)
+      val spinAngle = Angle.degrees(15)
+      def loop (count: Int, color: Color) : Image ={
+        count match {
+          case 0 => unit.fillColor(color)
+          case _ => unit beside loop(count - 1, color.spin(spinAngle))
+        }
+      }
+      loop(count, color)
+    }*/
 
   }
 }

@@ -1,4 +1,3 @@
-import com.sun.javafx.geom.transform.BaseTransform.Degree
 import doodle.core._
 import doodle.core.Image._
 import doodle.syntax._
@@ -111,17 +110,29 @@ object Exercise {
       }
     }
 
-/*    def gradientBox (count: Int, color: Color) : Image ={
-      val unit = Image.rectangle(10,10).fillColor(Color.blue)
-      val spinAngle = Angle.degrees(15)
+    def gradientBox (count: Int, color: Color, spinDegree: Int) : Image ={
+      val unit = Image.rectangle(30,30)
+      val spinAngle = Angle.degrees(spinDegree)
       def loop (count: Int, color: Color) : Image ={
         count match {
           case 0 => unit.fillColor(color)
-          case _ => unit beside loop(count - 1, color.spin(spinAngle))
+          case _ => unit.fillColor(color) beside loop(count - 1, color.spin(spinAngle))
         }
       }
       loop(count, color)
-    }*/
+    }
+
+    def gradientCircles(count: Int, size: Int, color: Color, spinDegree: Int) : Image ={
+      val spinAngle = Angle.degrees(spinDegree)
+
+      def loop (count: Int, size: Int, color: Color) : Image = {
+        count match {
+          case 0 => Image.empty
+          case _ => Image.circle(size).lineColor(color) on loop (count - 1, size + 7, color.spin(spinAngle))
+        }
+      }
+      loop(count, size, color)
+    }
 
   }
 }

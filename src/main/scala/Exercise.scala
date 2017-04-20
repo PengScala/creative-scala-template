@@ -133,6 +133,5 @@ object Exercise {
       }
       loop(count, size, color)
     }
-
   }
 }

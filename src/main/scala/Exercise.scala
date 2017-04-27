@@ -3,7 +3,7 @@ import doodle.core.Image._
 import doodle.syntax._
 import doodle.jvm.Java2DCanvas._
 import doodle.backend.StandardInterpreter._
-import sun.text.resources.CollationData_ro
+
 
 /**
   * Created by am_dev on 4/6/17.
@@ -181,4 +181,26 @@ object ch8{
   }
 
   val flower = sample(200, locate(scale(1.2), rose _), circleShape _, 2, Color.red) on sample(200, locate(rotate(30), rose _), triangleShape _, 2, Color.bisque) on sample(200, locate(scale(0.1), parametricCircle _), triangleShape _, 2, Color.blue)
+}
+
+object ch8_1 {
+  def conShape(count: Int, shape: Int => Image): Image =
+  count match {
+    case 0 => Image.empty
+    case n => shape(n) on conShape(n - 1, shape)
+  }
+
+  def rainbowCircle(n: Int): Image = {
+    val color = Color.red desaturate 0.5.normalized spin (n * 30).degrees
+    val shape = Image.circle(n * 12)
+    shape lineWidth 10 lineColor color
+  }
+
+  def fadingSquare(n: Int): Image = {
+    val color = Color.blue fadeOut (1 - n / 20.0).normalized
+    val shape = Image.rectangle(n * 12, n * 12)
+    shape lineWidth 10 lineColor color
+  }
+
+  val newShape = conShape(10, rainbowCircle) beside(conShape(10, fadingSquare))
 }

@@ -3,6 +3,7 @@ import doodle.core.Image._
 import doodle.syntax._
 import doodle.jvm.Java2DCanvas._
 import doodle.backend.StandardInterpreter._
+import sun.text.resources.CollationData_ro
 
 /**
   * Created by am_dev on 4/6/17.
@@ -149,20 +150,35 @@ object Exercise {
 object ch8{
   def parametricCircle(angle: Angle): Point = Point.polar(200, angle)
 
-  def rose (angle: Angle): Point = Point.polar((angle * 7).cos * 200, angle)
+  def rose(angle: Angle): Point = Point.polar((angle * 7).cos * 200, angle)
 
-  def sample(start: Angle, samples: Int): Image = {
+  def scale(factor: Double): Point => Point = (pt: Point) => {
+    Point.polar(pt.r * factor, pt.angle)
+  }
+
+  def rotate(angle: Double): Point => Point = (pt: Point) => {
+    Point.polar(pt.r, pt.angle + angle.degrees)
+  }
+
+  def locate(scale: Point => Point, point: Angle => Point): Angle => Point = (angle: Angle) => scale(point(angle))
+
+  def circleShape (r: Double, color: Color): Image = circle(r).fillColor(color)
+
+  def triangleShape (len: Double, color: Color): Image = triangle(len, len).fillColor(color)
+
+  def sample(samples: Int, location: Angle => Point, shape: (Double, Color) => Image, len: Double, color: Color): Image = {
+    //why do we need start here, it does seems to be used anywhere
     val step = Angle.one / samples
-    val dot = circle(5)
+    val dot = shape(len, color)
     def loop (count: Int): Image = {
       val angle = step * count
       count match {
         case 0 => Image.empty
-        case n => dot.at(rose(angle).toVec) on loop(n - 1)
+        case n => dot.at(location(angle).toVec) on loop(n - 1)
       }
     }
     loop(samples)
   }
 
-  val circleExample = sample(0.degrees, 400)
+  val flower = sample(200, locate(scale(1.2), rose _), circleShape _, 2, Color.red) on sample(200, locate(rotate(30), rose _), triangleShape _, 2, Color.bisque) on sample(200, locate(scale(0.1), parametricCircle _), triangleShape _, 2, Color.blue)
 }

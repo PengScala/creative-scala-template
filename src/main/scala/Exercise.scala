@@ -125,7 +125,6 @@ object Exercise {
 
     def gradientCircles(count: Int, size: Int, color: Color, spinDegree: Int) : Image ={
       val spinAngle = Angle.degrees(spinDegree)
-
       def loop (count: Int, size: Int, color: Color) : Image = {
         count match {
           case 0 => Image.empty
@@ -134,5 +133,36 @@ object Exercise {
       }
       loop(count, size, color)
     }
+
+    def sum(x: Int, acc: Int): Int =
+    x match {
+      case 0 => acc
+      case _ => 1+ sum(x - 1, acc + 1)
+    }
   }
+
+
+}
+
+/*I have lots of trouble to go through this exercise, it would be good to review this step by step in class*/
+
+object ch8{
+  def parametricCircle(angle: Angle): Point = Point.polar(200, angle)
+
+  def rose (angle: Angle): Point = Point.polar((angle * 7).cos * 200, angle)
+
+  def sample(start: Angle, samples: Int): Image = {
+    val step = Angle.one / samples
+    val dot = circle(5)
+    def loop (count: Int): Image = {
+      val angle = step * count
+      count match {
+        case 0 => Image.empty
+        case n => dot.at(rose(angle).toVec) on loop(n - 1)
+      }
+    }
+    loop(samples)
+  }
+
+  val circleExample = sample(0.degrees, 400)
 }

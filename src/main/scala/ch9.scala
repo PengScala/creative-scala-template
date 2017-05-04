@@ -52,6 +52,13 @@ object ch9 {
     val path = (0.0 to 360.0 by step).toList.map(i => LineTo(polar(size, initialRotation + i.degrees)))
     closedPath(MoveTo(polar(size, initialRotation)) :: path)
   }
+
+  def star(side: Int, size: Int, initialRotation: Angle, skip: Int): Image ={
+    val step = (Angle.one * skip / side)
+    val path = (1 until side).toList.map(i => LineTo(polar(size, step * i)))
+    closedPath(MoveTo(polar(size, initialRotation)) :: path)
+  }
+
 }
 
 

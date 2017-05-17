@@ -65,9 +65,9 @@ object ch10 {
   }
 
   def start: List[Instruction] = {
-    List(forward(100),
-      branch(turn(45.degrees),forward(100)),
-      branch(turn(-45.degrees),forward(100))
+    List(forward(10),
+      branch(turn(45.degrees),forward(10)),
+      branch(turn(-45.degrees),forward(10))
     )
   }
 
